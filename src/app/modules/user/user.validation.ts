@@ -10,7 +10,7 @@ const createUserValidationSchema = z.object({
     address: z.string().optional(),
     gender: z.enum([Gender.MALE, Gender.FEMALE], {
         error: 'Gender is required'
-    }),
+    }).optional(),
     profilePhoto: z.string().optional()
 }).refine((data) => data.password === data.confirmPassword, 'Password do not match')
 

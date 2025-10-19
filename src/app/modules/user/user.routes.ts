@@ -9,7 +9,7 @@ const userRouter = Router()
 
 
 // Get all users 
-userRouter.get('/', checkAuth(UserRole.ADMIN), UserControllers.getAllUsers)
+// userRouter.get('/', checkAuth(UserRole.ADMIN), UserControllers.getAllUsers)
 
 // Ceate user route
 userRouter.post('/',
@@ -18,7 +18,7 @@ userRouter.post('/',
           try {
                const parsedData = await UserValidation.createUserValidationSchema.parseAsync(JSON.parse(req.body.data))
                req.body = parsedData
-               return UserControllers.createPatient(req, res, next)
+               return UserControllers.createUser(req, res, next)
           } catch (err) {
                next(err)
           }
