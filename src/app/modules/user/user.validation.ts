@@ -1,52 +1,20 @@
-import { Gender } from '@prisma/client'
 import z from 'zod'
+import { Gender } from './user.interfaces'
 
 // patient creation input zod schema
-const createPatientValidationSchema = z.object({
-    password: z.string(),
-    patient: z.object({
-        name: z.string('Name is required'),
-        email: z.string('Email is required'),
-        address: z.string().optional(),
-        gender: z.enum([Gender.MALE, Gender.FEMALE, Gender.OTHERS], {
-            error: 'Gender is required and must be one of MALE, FEMALE or OTHERS'
-        }),
-        profilePhoto: z.string().optional()
-    })
-})
+const createUserValidationSchema = z.object({
+    fullName: z.string('Full Name is required'),
+    email: z.email('Email is required'),
+    password: z.string().min(6, 'Password length must be at least 6').max(12, 'Password length must be maximum 12'),
+    confirmPassword: z.string().min(6, 'Password length must be at least 6').max(12, 'Password length must be maximum 12'),
+    address: z.string().optional(),
+    gender: z.enum([Gender.MALE, Gender.FEMALE], {
+        error: 'Gender is required'
+    }),
+    profilePhoto: z.string().optional()
+}).refine((data) => data.password === data.confirmPassword, 'Password do not match')
 
-// admin creation input zod schema
-const createAdminValidationSchema = z.object({
-    password: z.string(),
-    admin: z.object({
-        name: z.string('Name is required'),
-        email: z.string('Email is required'),
-        contactNumber: z.string('Contact number is required'),
-        profilePhoto: z.string().optional()
-    })
-})
-
-// doctor creation input zod schema
-const createDoctorValidationSchema = z.object({
-    password: z.string(),
-    doctor: z.object({
-        name: z.string('Name is required'),
-        email: z.string('Email is required'),
-        address: z.string().optional(),
-        gender: z.enum([Gender.MALE, Gender.FEMALE, Gender.OTHERS], {
-            error: 'Gender is required and must be one of MALE, FEMALE or OTHERS'
-        }),
-        profilePhoto: z.string().optional(),
-        contactNumber: z.string('Contact number is required'),
-        registrationNumber: z.string('Registration number is required.').min(6, 'Registration number should be minimum 6 digits').max(6, 'Registration number should be maximum 6 digits'),
-        appointmentFee: z.number('Appointment fee is required.'),
-        qualification: z.string('Qualification is required.'),
-        designation: z.string('Designation is required.'),
-    })
-})
 
 export const UserValidation = {
-    createPatientValidationSchema,
-    createAdminValidationSchema,
-    createDoctorValidationSchema
+    createUserValidationSchema,
 }

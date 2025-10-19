@@ -4,6 +4,7 @@ dotenv.config()
 interface EnvConfig {
     PORT: string,
     NODE_ENV: string,
+    MONGODB_URI: string,
     DATABASE_URL: string,
     SALT_ROUND: string,
     JWT: {
@@ -18,16 +19,17 @@ interface EnvConfig {
 }
 
 const loadEnvVariables = (): EnvConfig => {
-    const requiredEnvVars: string[] = ['PORT', 'DATABASE_URL', 'JWT_ACCESS_SECRET', 'NODE_ENV', 'SALT_ROUND', 'CLOUDINARY_CLOUD_NAME', 'CLOUDINARY_API_KEY', 'CLOUDINARY_API_SECRET', 'JWT_ACCESS_SECRET', 'JWT_REFRESH_SECRET']
+    const requiredEnvVars: string[] = ['PORT', 'DATABASE_URL', 'MONGODB_URI', 'JWT_ACCESS_SECRET', 'NODE_ENV', 'SALT_ROUND', 'CLOUDINARY_CLOUD_NAME', 'CLOUDINARY_API_KEY', 'CLOUDINARY_API_SECRET', 'JWT_ACCESS_SECRET', 'JWT_REFRESH_SECRET']
 
     requiredEnvVars.forEach((key: string) => {
-        if (!process.env[key]) {
+        if (!process.env[key]) { 
             throw new Error(`Env Variable ${key} is missing on .env file.`)
         }
     })
 
     return {
         PORT: process.env.port as string,
+        MONGODB_URI: process.env.MONGODB_URI as string,
         DATABASE_URL: process.env.DATABASE_URL as string,
         NODE_ENV: process.env.NODE_ENV as string,
         SALT_ROUND: process.env.SALT_ROUND as string,
