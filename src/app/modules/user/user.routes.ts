@@ -9,7 +9,7 @@ const userRouter = Router()
 
 
 // Get all users 
-// userRouter.get('/', checkAuth(UserRole.ADMIN), UserControllers.getAllUsers)
+userRouter.get('/', checkAuth(UserRole.ADMIN), UserControllers.getAllUsers)
 
 // Ceate user route
 userRouter.post('/',

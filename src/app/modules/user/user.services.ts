@@ -4,14 +4,19 @@ import bcrypt from 'bcrypt'
 import { fileUploader } from "../../utils/fileUploder";
 import { envVars } from "../../config/env";
 import { User } from "./user.models";
+import { applyQuery } from "../../utils/applyQuery";
 
+interface IFilter {
+    role: string,
+    status: string
+}
 
 // Get all users from db
 // const getAllUsers = async (params: any, options: any) => {
 //     const { page, limit, skip, sortOrder, sortBy } = calculatePagination(options)
 //     const { searchTerm, ...filterData } = params
 
-//     const andConditions: Prisma.UserWhereInput[] = []
+//     const andConditions = []
 
 //     if (searchTerm) {
 //         andConditions.push({
@@ -34,13 +39,11 @@ import { User } from "./user.models";
 //         })
 //     }
 
-//     const whereConditions: Prisma.UserWhereInput = andConditions.length > 0 ? {
+//     const whereConditions = andConditions.length > 0 ? {
 //         AND: andConditions
 //     } : {}
 
-//     const total = await prisma.user.count({
-//         where: whereConditions
-//     })
+//     const total = await User.countDocuments()
 
 //     const result = await prisma.user.findMany({
 //         skip,
@@ -61,6 +64,28 @@ import { User } from "./user.models";
 //     }
 // }
 
+const getAllUsers = (options: Record<string, any>) => {
+
+    const queryOptions = {
+        page: Number(options.page) || 1,
+        limit: Number(options.limit) || 10,
+        sortField: options.sortField as string || 'createdAt',
+        sortOrder: (options.sortOrder === 'asc' ? 'asc' : 'desc') as 'asc' | 'desc',
+        search: options.search as string || '',
+        searchFields: ['fullName', 'email'],
+        filter: {} as Record<string, any>
+    }
+
+    if(options.role) queryOptions.filter.role = options.role
+    if(options.status) queryOptions.filter.status = options.status
+
+    const result = applyQuery(User, queryOptions)
+
+    console.log(result)
+
+    return result
+}
+
 
 // Create user
 const createUser = async (req: Request) => {
@@ -70,7 +95,7 @@ const createUser = async (req: Request) => {
         req.body.profilePhoto = uploadedResult?.secure_url
     }
 
-    const { fullName, email, password: userPassword, confirmPassword } = req.body
+    const { fullName, email, password: userPassword } = req.body
 
     const existingUser = await User.findOne({ email })
 
@@ -97,4 +122,5 @@ const createUser = async (req: Request) => {
 
 export const UserServices = {
     createUser,
+    getAllUsers
 }

@@ -16,3 +16,12 @@ export enum Gender {
     MALE = 'MALE',
     FEMALE = 'FEMALE'
 }
+
+export interface IUser {
+    fullName: string;
+    email: string;
+    password: string;
+    status?: string;
+    role?: string;
+    profilePhoto?: string | null | undefined;
+}

@@ -25,12 +25,12 @@ const userSchema = new mongoose.Schema(
         profilePhoto: {
             type: String,
         },
-        userStatus: {
+        status: {
             type: String,
             enum: Object.keys(UserStatus),
             default: UserStatus.ACTIVE
         },
-        userRole: {
+        role: {
             type: String,
             enum: Object.keys(UserRole),
             default: UserRole.USER

@@ -5,22 +5,23 @@ import { sendResponse } from '../../utils/userResponse';
 import { UserServices } from './user.services';
 import { pickQueries } from './../../utils/pickQueries';
 import { userFilterableFields, userSearchableFields } from './user.constants';
+import { User } from './user.models';
+import { IUser } from './user.interfaces';
 
 
 // Get all users from db
-// const getAllUsers = catchAsync(async (req: Request, res: Response) => {
-//   const filters =  pickQueries(req.query, userFilterableFields)
-//   const options =  pickQueries(req.query, ['page', 'limit', 'sortBy', 'sortOrder'])
+const getAllUsers = catchAsync(async (req: Request, res: Response) => {
+  const options = req.query
 
-//   const result = await UserServices.getAllUsers(filters, options);
+  const result = await UserServices.getAllUsers(options);
 
-//   sendResponse(res, {
-//     statusCode: 200,
-//     success: true,
-//     message: 'All users retrived successfully.',
-//     data: result
-//   })
-// })
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'All users retrived successfully.',
+    data: result
+  })
+})
 
 
 // Create user
@@ -30,7 +31,7 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: 201,
     success: true,
-    message: 'Patient Account Created Successfully',
+    message: 'User Account Created Successfully',
     data: result
   })
 })
@@ -38,4 +39,5 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
 
 export const UserControllers = {
   createUser,
+  getAllUsers
 }
