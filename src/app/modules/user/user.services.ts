@@ -6,64 +6,6 @@ import { envVars } from "../../config/env";
 import { User } from "./user.models";
 import { applyQuery } from "../../utils/applyQuery";
 
-interface IFilter {
-    role: string,
-    status: string
-}
-
-// Get all users from db
-// const getAllUsers = async (params: any, options: any) => {
-//     const { page, limit, skip, sortOrder, sortBy } = calculatePagination(options)
-//     const { searchTerm, ...filterData } = params
-
-//     const andConditions = []
-
-//     if (searchTerm) {
-//         andConditions.push({
-//             OR: userSearchableFields.map((field) => ({
-//                 [field]: {
-//                     contains: searchTerm,
-//                     mode: 'insensitive'
-//                 }
-//             }))
-//         })
-//     }
-
-//     if(Object.keys(filterData).length > 0){
-//         andConditions.push({
-//             AND: Object.keys(filterData).map((key) => ({
-//                 [key]: {
-//                     equals: filterData[key]
-//                 }
-//             }))
-//         })
-//     }
-
-//     const whereConditions = andConditions.length > 0 ? {
-//         AND: andConditions
-//     } : {}
-
-//     const total = await User.countDocuments()
-
-//     const result = await prisma.user.findMany({
-//         skip,
-//         take: limit,
-//         where: whereConditions,
-//         orderBy: {
-//             [sortBy]: sortOrder
-//         }
-//     })
-
-//     return {
-//         meta: {
-//             page,
-//             limit,
-//             total
-//         },
-//         data: result
-//     }
-// }
-
 const getAllUsers = (options: Record<string, any>) => {
 
     const queryOptions = {
