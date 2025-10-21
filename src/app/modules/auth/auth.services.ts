@@ -1,11 +1,27 @@
-import { UserStatus } from "@prisma/client"
 import { userLoginInput } from "./auth.interfaces"
 import bcrypt from 'bcrypt'
 import AppError from "../../errorHelpers/appError"
-import jwt from 'jsonwebtoken'
 import { envVars } from "../../config/env"
 import { generateJwtToken } from "../../utils/generateJwtToken"
 import { User } from "../user/user.models"
+import { IAuthenticatedRequest, JWTPayload } from "../../interfaces"
+import { Request } from "express"
+import { StatusCodes } from "http-status-codes"
+
+
+
+// Get loged in user
+const getLogedInUser = async(req: IAuthenticatedRequest) => {
+    const email = req?.user?.email
+
+    const logedInUser = await User.findOne({email}).select('fullName email profilePhoto status role -_id')
+
+    if(!logedInUser){
+        throw new AppError(StatusCodes.UNAUTHORIZED, 'User is unauthorized')
+    }
+
+    return logedInUser
+}
 
 // User login
 const userLogin = async (payload: userLoginInput) => {
@@ -43,5 +59,6 @@ const userLogin = async (payload: userLoginInput) => {
 
 
 export const AuthServices = {
-    userLogin
+    userLogin,
+    getLogedInUser
 }

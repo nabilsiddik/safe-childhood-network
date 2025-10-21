@@ -1,11 +1,15 @@
-import { NextFunction, Request, RequestHandler, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import { envVars } from "../config/env"
 import { verifyToken } from "../utils/generateJwtToken"
+import { IAuthenticatedRequest } from "../interfaces"
 
 export const checkAuth = (...roles: string[]) => {
-    return async (req: Request & {user?: any}, res: Response, next: NextFunction) => {
+    return async (req: IAuthenticatedRequest, res: Response, next: NextFunction) => {
         try {
-            const token = req.cookies.accessToken
+
+            console.log(req.cookies)
+
+            const token = req?.cookies?.accessToken
 
             if (!token) {
                 throw new Error('Token not found')

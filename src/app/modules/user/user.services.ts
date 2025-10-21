@@ -6,6 +6,7 @@ import { envVars } from "../../config/env";
 import { User } from "./user.models";
 import { applyQuery } from "../../utils/applyQuery";
 
+// Get all users
 const getAllUsers = (options: Record<string, any>) => {
 
     const queryOptions = {
@@ -28,16 +29,21 @@ const getAllUsers = (options: Record<string, any>) => {
     return result
 }
 
-
 // Create user
 const createUser = async (req: Request) => {
 
-    if (req?.file) {
-        const uploadedResult = await fileUploader.uploadToCloudinary(req.file)
-        req.body.profilePhoto = uploadedResult?.secure_url
-    }
+    // if (req?.file) {
+    //     const uploadedResult = await fileUploader.uploadToCloudinary(req.file)
+    //     req.body.profilePhoto = uploadedResult?.secure_url
+    // }
 
     const { fullName, email, password: userPassword } = req.body
+
+    console.log({
+        fullName,
+        email,
+        userPassword
+    })
 
     const existingUser = await User.findOne({ email })
 

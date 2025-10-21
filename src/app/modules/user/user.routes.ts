@@ -11,7 +11,7 @@ const userRouter = Router()
 // Get all users 
 userRouter.get('/', checkAuth(UserRole.ADMIN), UserControllers.getAllUsers)
 
-// Ceate user route
+// Create user route
 userRouter.post('/',
      fileUploader.upload.single('file'),
      async (req: Request, res: Response, next: NextFunction) => {
