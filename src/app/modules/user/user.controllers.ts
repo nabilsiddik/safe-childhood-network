@@ -26,7 +26,7 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
 
 // Create user
 const createUser = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserServices.createUser(req);
+  const result = await UserServices.createUser(req.body);
 
   sendResponse(res, {
     statusCode: 201,

@@ -1,10 +1,9 @@
-import { Request } from "express";
 import AppError from "../../errorHelpers/appError";
 import bcrypt from 'bcrypt'
-import { fileUploader } from "../../utils/fileUploder";
 import { envVars } from "../../config/env";
 import { User } from "./user.models";
 import { applyQuery } from "../../utils/applyQuery";
+import { IUser } from "./user.interfaces";
 
 // Get all users
 const getAllUsers = (options: Record<string, any>) => {
@@ -30,19 +29,13 @@ const getAllUsers = (options: Record<string, any>) => {
 }
 
 // Create user
-const createUser = async (req: Request) => {
-
-    // if (req?.file) {
-    //     const uploadedResult = await fileUploader.uploadToCloudinary(req.file)
-    //     req.body.profilePhoto = uploadedResult?.secure_url
-    // }
-
-    const { fullName, email, password: userPassword } = req.body
+const createUser = async (payload: IUser) => {
+    const { fullName, email, profilePhoto } = payload
 
     console.log({
         fullName,
         email,
-        userPassword
+        profilePhoto,
     })
 
     const existingUser = await User.findOne({ email })
@@ -51,12 +44,12 @@ const createUser = async (req: Request) => {
         throw new AppError(400, 'A user with this email already exist.')
     }
 
-    const hashedPassword = await bcrypt.hash(userPassword, Number(envVars.SALT_ROUND))
+    // const hashedPassword = await bcrypt.hash(userPassword, Number(envVars.SALT_ROUND))
 
     const userData = {
         fullName,
         email,
-        password: hashedPassword
+        profilePhoto
     }
 
     const createdUser = await User.create(userData)

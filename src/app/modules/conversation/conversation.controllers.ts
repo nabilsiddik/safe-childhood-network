@@ -19,8 +19,8 @@ const createConversation = catchAsync(async (req: Request, res: Response) => {
 
 // get user conversation
 const getUserConversation = catchAsync(async (req: Request, res: Response) => {
-  const userId = req.params.userId
-  const result = await ConversationServices.getUserConversation(userId as string)
+  const userEmail = req.params.userEmail
+  const result = await ConversationServices.getUserConversation(userEmail as string)
 
 
   sendResponse(res, {

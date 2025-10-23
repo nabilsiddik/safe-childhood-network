@@ -3,12 +3,12 @@ import { Conversation } from "./conversation.models"
 
 // Create conversation
 const createConversation = async(payload: {
-    senderId: string,
-    receiverId: string
+    senderEmail: string,
+    receiverEmail: string
 }) => {
 
     const createdConversation = await Conversation.create({
-        members: [payload.senderId, payload.receiverId]
+        members: [payload.senderEmail, payload.receiverEmail]
     })
 
     console.log(createdConversation)
@@ -18,9 +18,9 @@ const createConversation = async(payload: {
 
 
 // Get conversation of a user
-const getUserConversation = async(userId: string) => {
+const getUserConversation = async(userEmail: string) => {
     const conversation = await Conversation.find({
-        members: {$in: [userId]}
+        members: {$in: [userEmail]}
     })
 
     return conversation

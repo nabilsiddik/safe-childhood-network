@@ -3,7 +3,7 @@ import { ConversationControllers } from "./conversation.controllers";
 
 const conversationRoute = Router()
 
-conversationRoute.get('/:userId', ConversationControllers.getUserConversation)
+conversationRoute.get('/:userEmail', ConversationControllers.getUserConversation)
 conversationRoute.post('/', ConversationControllers.createConversation)
 
 export default conversationRoute

@@ -20,7 +20,7 @@ export enum Gender {
 export interface IUser {
     fullName: string;
     email: string;
-    password: string;
+    password?: string;
     status?: string;
     role?: string;
     profilePhoto?: string | null | undefined;

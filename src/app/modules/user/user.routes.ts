@@ -12,18 +12,7 @@ const userRouter = Router()
 userRouter.get('/', checkAuth(UserRole.ADMIN), UserControllers.getAllUsers)
 
 // Create user route
-userRouter.post('/',
-     fileUploader.upload.single('file'),
-     async (req: Request, res: Response, next: NextFunction) => {
-          try {
-               const parsedData = await UserValidation.createUserValidationSchema.parseAsync(JSON.parse(req.body.data))
-               req.body = parsedData
-               return UserControllers.createUser(req, res, next)
-          } catch (err) {
-               next(err)
-          }
-     }
-)
+userRouter.post('/', UserControllers.createUser)
 
 
 
