@@ -11,7 +11,6 @@ const createConversation = async(payload: {
         members: [payload.senderEmail, payload.receiverEmail]
     })
 
-    console.log(createdConversation)
 
     return createdConversation
 }

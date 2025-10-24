@@ -7,7 +7,6 @@ export const checkAuth = (...roles: string[]) => {
     return async (req: IAuthenticatedRequest, res: Response, next: NextFunction) => {
         try {
 
-            console.log(req.cookies)
 
             const token = req?.cookies?.accessToken
 

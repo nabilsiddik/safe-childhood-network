@@ -7,7 +7,6 @@ const createMessage = async(payload: {
     text: string
 }) => {
 
-    console.log(payload)
 
 
     const messageData = {
@@ -25,7 +24,6 @@ const createMessage = async(payload: {
 // Get all messages of a specific conversation
 const getSpecificConversationMessages = async(conversationId: string) => {
 
-    console.log(conversationId)
 
     const messages = await Message.find({
         conversationId

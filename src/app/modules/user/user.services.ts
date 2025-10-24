@@ -23,20 +23,26 @@ const getAllUsers = (options: Record<string, any>) => {
 
     const result = applyQuery(User, queryOptions)
 
-    console.log(result)
 
     return result
 }
 
+// Get user by email
+const getUserByEmail = async(userEmail: string) => {
+
+    const user = await User.findOne({email: userEmail})
+
+    if(!user){
+        throw new AppError(404, 'user not found')
+    }
+
+    return user
+}
+
+
 // Create user
 const createUser = async (payload: IUser) => {
     const { fullName, email, profilePhoto } = payload
-
-    console.log({
-        fullName,
-        email,
-        profilePhoto,
-    })
 
     const existingUser = await User.findOne({ email })
 
@@ -63,5 +69,6 @@ const createUser = async (payload: IUser) => {
 
 export const UserServices = {
     createUser,
-    getAllUsers
+    getAllUsers,
+    getUserByEmail
 }

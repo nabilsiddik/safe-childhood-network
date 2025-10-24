@@ -24,6 +24,22 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
 })
 
 
+// Get user by email
+const getUserByEmail = catchAsync(async (req: Request, res: Response) => {
+  const userEmail = req.params.userEmail
+
+  const result = await UserServices.getUserByEmail(userEmail as string);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Single user retrived successfully.',
+    data: result
+  })
+})
+
+
+
 // Create user
 const createUser = catchAsync(async (req: Request, res: Response) => {
   const result = await UserServices.createUser(req.body);
@@ -39,5 +55,6 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
 
 export const UserControllers = {
   createUser,
-  getAllUsers
+  getAllUsers,
+  getUserByEmail
 }

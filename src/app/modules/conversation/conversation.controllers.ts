@@ -20,14 +20,25 @@ const createConversation = catchAsync(async (req: Request, res: Response) => {
 // get user conversation
 const getUserConversation = catchAsync(async (req: Request, res: Response) => {
   const userEmail = req.params.userEmail
-  const result = await ConversationServices.getUserConversation(userEmail as string)
+  const adminEmail = 'safechildhoodnetwork@gmail.com'
+
+  let conversations = await ConversationServices.getUserConversation(userEmail)
+
+  if(conversations.length === 0 && userEmail !== adminEmail){
+    const newConversation = await ConversationServices.createConversation({
+      senderEmail: userEmail,
+      receiverEmail: adminEmail
+    })
+
+    conversations = [newConversation]
+  }
 
 
   sendResponse(res, {
     statusCode: 201,
     success: true,
     message: 'user conversation retrive successfully',
-    data: result
+    data: conversations
   })
 })
 

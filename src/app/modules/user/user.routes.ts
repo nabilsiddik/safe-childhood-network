@@ -11,6 +11,9 @@ const userRouter = Router()
 // Get all users 
 userRouter.get('/', checkAuth(UserRole.ADMIN), UserControllers.getAllUsers)
 
+// Get user by email
+userRouter.get('/:userEmail', UserControllers.getUserByEmail)
+
 // Create user route
 userRouter.post('/', UserControllers.createUser)
 
