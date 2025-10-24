@@ -31,7 +31,7 @@ const userLogin = async (payload: userLoginInput) => {
         throw new AppError(400, 'User with this email not found.')
     }
 
-    const isPasswordMatch = await bcrypt.compare(payload?.password, existingUser?.password)
+    const isPasswordMatch = await bcrypt.compare(payload?.password, existingUser?.password as string)
 
     if (!isPasswordMatch) {
         throw new AppError(400, 'Password is incorrect')
