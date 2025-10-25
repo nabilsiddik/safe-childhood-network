@@ -35,6 +35,7 @@ const getUserConversation = (0, catchAsync_1.catchAsync)((req, res) => __awaiter
         });
         conversations = [newConversation];
     }
+    console.log(conversations);
     (0, userResponse_1.sendResponse)(res, {
         statusCode: 201,
         success: true,

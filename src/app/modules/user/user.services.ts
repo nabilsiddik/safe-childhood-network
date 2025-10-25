@@ -1,6 +1,4 @@
 import AppError from "../../errorHelpers/appError";
-import bcrypt from 'bcrypt'
-import { envVars } from "../../config/env";
 import { User } from "./user.models";
 import { applyQuery } from "../../utils/applyQuery";
 import { IUser } from "./user.interfaces";

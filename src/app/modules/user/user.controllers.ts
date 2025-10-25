@@ -3,10 +3,6 @@ import { Request, Response } from 'express';
 import { catchAsync } from './../../errorHelpers/catchAsync';
 import { sendResponse } from '../../utils/userResponse';
 import { UserServices } from './user.services';
-import { pickQueries } from './../../utils/pickQueries';
-import { userFilterableFields, userSearchableFields } from './user.constants';
-import { User } from './user.models';
-import { IUser } from './user.interfaces';
 
 
 // Get all users from db
