@@ -14,7 +14,7 @@ const loadEnvVariables = () => {
         }
     });
     return {
-        PORT: process.env.port,
+        PORT: process.env.PORT,
         MONGODB_URI: process.env.MONGODB_URI,
         DATABASE_URL: process.env.DATABASE_URL,
         NODE_ENV: process.env.NODE_ENV,
