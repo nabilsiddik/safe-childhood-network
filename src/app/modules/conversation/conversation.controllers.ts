@@ -33,6 +33,8 @@ const getUserConversation = catchAsync(async (req: Request, res: Response) => {
     conversations = [newConversation]
   }
 
+  console.log(conversations)
+
 
   sendResponse(res, {
     statusCode: 201,
