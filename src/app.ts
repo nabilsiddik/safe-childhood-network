@@ -8,7 +8,7 @@ import globalErrorHandler from './app/middlewares/globalErrorHandler'
 export const app = express()
 
 app.use(cors({
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000', 'https://safe-childhood-network-client.vercel.app'],
     credentials: true
 }))
 app.use(express.json())
